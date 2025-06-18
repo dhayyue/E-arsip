@@ -8,13 +8,29 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'superadmin') {
 }
 
 require 'controller/db.php';
+
 $stmt = $pdo->query("
-  SELECT LEFT(Tanggal_Diterima, 4) AS tahun, COUNT(*) AS total
-  FROM arsip
+  SELECT tahun, COUNT(*) AS total FROM (
+    SELECT 
+      SUBSTRING_INDEX(Tanggal_Diterima, ' ', -1) AS tahun
+    FROM arsip
+    WHERE SUBSTRING_INDEX(Tanggal_Diterima, ' ', -1) REGEXP '^[0-9]{4}$'
+
+    UNION ALL
+
+    SELECT 
+      REGEXP_SUBSTR(Kategori_Arsip, '[0-9]{4}') AS tahun
+    FROM arsip
+    WHERE Kategori_Arsip REGEXP '[0-9]{4}'
+  ) AS gabungan_tahun
+  WHERE tahun IS NOT NULL
   GROUP BY tahun
   ORDER BY tahun DESC
 ");
+
 $data = $stmt->fetchAll();
+
+
 
 
 ?>
@@ -50,7 +66,7 @@ $data = $stmt->fetchAll();
 
 <main>
     <div class="container-fluid px-4">
-        <h1 class="mt-4">Rekap Jumlah Arsip per Tahun</h1>
+        <h1 class="mt-4">Rekap Arsip PIDUM</h1>
         <div class="card mb-4">
             <div class="card-header">
                 <i class="fas fa-calendar-alt me-1"></i>

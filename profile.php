@@ -37,51 +37,53 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 
 <?php include('header.php'); ?>
+
+<head>
+</head>
 <main>
     <div class="container py-5">
         <div class="row justify-content-center">
             <div class="col-lg-6 col-md-8">
                 <div class="card shadow rounded-4 border-0">
                     <div class="card-body p-4">
-
-                        <h3 class="text-center mb-4 fw-bold text-primary">Profil Saya</h3>
+                        <div class="text-center mb-4">
+                            <img src="assets/user.png" class="rounded-circle shadow border border-3 border-light"
+                                style="width: 110px; height: 110px; object-fit: cover;">
+                            <h4 class="mt-3 fw-bold text-dark">Profil Saya</h4>
+                        </div>
 
                         <?php if (isset($_GET['updated'])): ?>
-                        <div class="alert alert-success text-center mb-4 rounded-pill">
+                        <div class="alert alert-success text-center rounded-pill py-2">
                             ✅ Profil berhasil diperbarui.
                         </div>
                         <?php endif; ?>
 
-                        <!-- Foto Profil -->
-                        <div class="text-center mb-4">
-                            <img src="assets/user.png" alt="Foto Profil" class="rounded-circle border border-2"
-                                style="width: 100px; height: 100px; object-fit: cover;">
-                        </div>
-
                         <form method="POST">
                             <div class="mb-3">
                                 <label class="form-label fw-semibold">Username</label>
-                                <input name="username" type="text" class="form-control rounded-pill px-4 py-2"
-                                    value="<?= htmlspecialchars($user['username']) ?>" required>
+                                <input type="text" name="username" value="<?= htmlspecialchars($user['username']) ?>"
+                                    class="form-control rounded-pill px-4 py-2" required>
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label fw-semibold">Email</label>
-                                <input name="email" type="email" class="form-control rounded-pill px-4 py-2"
-                                    value="<?= htmlspecialchars($user['email']) ?>" required>
+                                <input type="email" name="email" value="<?= htmlspecialchars($user['email']) ?>"
+                                    class="form-control rounded-pill px-4 py-2" required>
                             </div>
 
                             <div class="mb-3">
-                                <label class="form-label fw-semibold">Password Baru (opsional)</label>
-                                <input name="password" type="password" class="form-control rounded-pill px-4 py-2"
+                                <label class="form-label fw-semibold">Password Baru <span
+                                        class="text-muted">(opsional)</span></label>
+                                <input type="password" name="password" class="form-control rounded-pill px-4 py-2"
                                     placeholder="Biarkan kosong jika tidak ingin mengganti">
                             </div>
 
-                            <div class="d-grid mt-4">
-                                <button type="submit" class="btn btn-primary rounded-pill py-2 fw-semibold">
-                                    Simpan Perubahan
+                            <div class="text-center mt-4">
+                                <button type="submit" class="btn btn-success rounded-pill fw-semibold px-4 py-2">
+                                    Simpan
                                 </button>
                             </div>
+
                         </form>
 
                     </div>
@@ -89,6 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
         </div>
     </div>
-</main>
 
-<?php include('footer.php'); ?>
+</main>
+<?php include('footer.php');
+?>

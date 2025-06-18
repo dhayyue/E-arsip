@@ -47,15 +47,15 @@ include('create-archive.php');
         <?php endif; ?>
 
         <?php
-            if ($role != 'user' && isset($_POST['edit'])):
-                $id = $_POST['edit'];
-                $stmt = $pdo->prepare("SELECT * FROM arsip WHERE id = ?");
-                $stmt->execute([$id]);
-                $record = $stmt->fetch(PDO::FETCH_ASSOC);
-                if ($record):
-                    include('edit-archive.php');
-                endif;
+        if ($role != 'user' && isset($_POST['edit'])):
+            $id = $_POST['edit'];
+            $stmt = $pdo->prepare("SELECT * FROM arsip WHERE id = ?");
+            $stmt->execute([$id]);
+            $record = $stmt->fetch(PDO::FETCH_ASSOC);
+            if ($record):
+                include('edit-archive.php');
             endif;
+        endif;
         ?>
 
 
@@ -67,20 +67,25 @@ include('create-archive.php');
                     <div class="input-group">
                         <input type="text" name="search" id="searchInput" placeholder="Search archive..."
                             value="<?= htmlspecialchars($search) ?>" autocomplete="off" class="form-control" />
-                        <noscript><button type="submit" class="btn btn-primary">Search</button></noscript>
+                        <button type="submit" class="btn btn-primary">Search</button>
                     </div>
                 </form>
-
                 <script>
                 const input = document.getElementById('searchInput');
                 let timer;
+
                 input.addEventListener('input', function() {
                     clearTimeout(timer);
-                    timer = setTimeout(() => {
-                        document.getElementById('searchForm').submit();
-                    }, 500);
+                    const val = input.value.trim();
+
+                    if (val.length >= 3) {
+                        timer = setTimeout(() => {
+                            document.getElementById('searchForm').submit();
+                        }, 600); // delay 600ms
+                    }
                 });
                 </script>
+
 
                 <!-- Table -->
                 <div class="table-responsive">
@@ -102,15 +107,29 @@ include('create-archive.php');
                                 <th>Kurun Waktu</th>
                                 <th>Inaktif</th>
                                 <th>Keterangan</th>
-                                <?php if ($role != 'user') echo "<th>Actions</th>"; ?>
+                                <?php if ($role != 'user')
+                                    echo "<th>Actions</th>"; ?>
                             </tr>
                         </thead>
                         <tbody>
                             <?php foreach ($data as $row): ?>
                             <tr>
-                                <?php foreach ($row as $key => $value): ?>
-                                <td><?= htmlspecialchars($value) ?></td>
-                                <?php endforeach; ?>
+                                <td><?= htmlspecialchars($row['id']) ?></td>
+                                <td><?= htmlspecialchars($row['Pencipta_Arsip']) ?></td>
+                                <td><?= htmlspecialchars($row['Nomor_Arsip']) ?></td>
+                                <td><?= htmlspecialchars($row['Unit_Pengelola']) ?></td>
+                                <td><?= htmlspecialchars($row['Uraian_Informasi']) ?></td>
+                                <td><?= htmlspecialchars($row['Kode_Klasifikasi']) ?></td>
+                                <td><?= htmlspecialchars($row['Jumlah']) ?></td>
+                                <td><?= htmlspecialchars($row['Media']) ?></td>
+                                <td><?= htmlspecialchars($row['Kategori_Arsip']) ?></td>
+                                <td><?= htmlspecialchars($row['Tingkat_Perkembangan_Arsip']) ?></td>
+                                <td><?= htmlspecialchars($row['Tanggal_Diterima']) ?></td>
+                                <td><?= htmlspecialchars($row['Lokasi_Simpan']) ?></td>
+                                <td><?= htmlspecialchars($row['Kurun_Waktu']) ?></td>
+                                <td><?= htmlspecialchars($row['inaktif']) ?></td>
+                                <td><?= htmlspecialchars($row['Keterangan']) ?></td>
+
                                 <?php if ($role != 'user'): ?>
                                 <td>
                                     <form method="post" class="d-inline">
@@ -127,6 +146,7 @@ include('create-archive.php');
                             </tr>
                             <?php endforeach; ?>
                         </tbody>
+
                     </table>
                 </div>
 

@@ -26,83 +26,137 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <head>
     <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-    <title>Login</title>
-    <link href="css/styles.css" rel="stylesheet" />
+    <title>Login E-Arsip</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.3.0/css/all.css" crossorigin="anonymous" />
+    <style>
+    .glass-card {
+        background-color: rgba(138, 135, 135, 0.54);
+        /* Lebih gelap dari sebelumnya */
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 20px;
+        padding: 30px;
+        color: white;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    }
+
+    .form-control:focus {
+        background-color: rgba(255, 255, 255, 0.2);
+        color: white;
+    }
+
+    .form-floating label {
+        color: #ccc;
+    }
+
+    .btn-primary {
+        background-color: #1e3a8a;
+        border: none;
+    }
+
+    .btn-primary:hover {
+        background-color: #3b82f6;
+    }
+
+    .logo-img {
+        max-height: 90px;
+    }
+
+    .input-icon {
+        position: absolute;
+        left: 10px;
+        top: 12px;
+        color: #bbb;
+    }
+
+    .input-group {
+        position: relative;
+    }
+
+    .form-control::placeholder {
+        color: #ccc;
+    }
+
+    .card-footer a {
+        color: #fff;
+    }
+
+    .card-footer a:hover {
+        text-decoration: underline;
+    }
+    </style>
 </head>
 
-<body style="background: url('assets/kejari.jpg') no-repeat center center fixed; background-size: cover;">
-    <div style="position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5); z-index:-1;">
+<body
+    style="background: url('assets/kejari.jpg') no-repeat center center fixed; background-size: cover; position: relative;">
+    <div style="position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.65); z-index:0;">
     </div>
-    <div id="layoutAuthentication">
-        <div id="layoutAuthentication_content">
-            <main class="d-flex align-items-center justify-content-center min-vh-100">
-                <div class="container">
-                    <div class="row justify-content-center">
-                        <div class="col-lg-5">
-                            <div class="card shadow-lg border-0 rounded-lg">
-                                <div class="card-header text-center">
-                                    <img src="assets/logo.png" alt="Logo" class="img-fluid my-3"
-                                        style="max-height: 100px;">
-                                    <h3 class="font-weight-light my-2">Login</h3>
-                                </div>
 
-                                <div class="card-body">
-                                    <form method="POST">
-                                        <div class="form-floating mb-3">
-                                            <input class="form-control" id="inputUsername" type="text"
-                                                placeholder="Enter Username" name="username" required />
-                                            <label for="inputUsername">Username</label>
-                                        </div>
-                                        <div class="form-floating mb-3">
-                                            <input class="form-control" id="inputPassword" type="password"
-                                                placeholder="Password" name="password" required />
-                                            <label for="inputPassword">Password</label>
-                                        </div>
-                                        <div class="d-flex justify-content-center mt-4 mb-0">
-                                            <button class="btn btn-primary" type="submit">Login</button>
-                                        </div>
-                                    </form>
-                                </div>
-                                <div class="card-footer text-center py-3">
-                                    <div class="small"><a href="register.php">Need an account? Sign up!</a></div>
+    <main class="d-flex align-items-center justify-content-center min-vh-100 position-relative" style="z-index:1;">
+
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-5">
+                    <div class="glass-card">
+                        <div class="text-center mb-4">
+                            <img src="assets/logo.png" alt="Logo" class="logo-img">
+                            <h4 class="mt-2">Login E-Arsip</h4>
+                        </div>
+                        <form method="POST">
+                            <div class="mb-3">
+                                <label for="inputUsername" class="form-label text-white">Username</label>
+                                <div class="position-relative">
+                                    <i
+                                        class="fas fa-user position-absolute top-50 start-0 translate-middle-y ms-3 text-white"></i>
+                                    <input type="text" class="form-control ps-5 bg-transparent text-white"
+                                        id="inputUsername" name="username" required>
                                 </div>
                             </div>
+
+                            <div class="mb-3">
+                                <label for="inputPassword" class="form-label text-white">Password</label>
+                                <div class="position-relative">
+                                    <i
+                                        class="fas fa-lock position-absolute top-50 start-0 translate-middle-y ms-3 text-white"></i>
+                                    <input type="password" class="form-control ps-5 bg-transparent text-white"
+                                        id="inputPassword" name="password" required>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-center mt-4 mb-3">
+                                <button class="btn btn-primary w-100" type="submit">Login</button>
+                            </div>
+                        </form>
+                        <div class="card-footer text-center">
+                            <small>Belum punya akun? <a href="register.php">Daftar sekarang</a></small>
                         </div>
                     </div>
                 </div>
-            </main>
+            </div>
         </div>
-    </div>
+    </main>
 
-    <!-- Modal -->
+    <!-- Modal Gagal Login -->
     <div class="modal fade" id="loginFailedModal" tabindex="-1" aria-labelledby="loginFailedModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header bg-danger text-white">
-                    <h5 class="modal-title" id="loginFailedModalLabel">Login Failed</h5>
+                    <h5 class="modal-title">Login Gagal</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                         aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    Incorrect username or password. Please try again.
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    Username atau password salah. Silakan coba lagi.
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Script -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous">
     </script>
-    <script src="js/scripts.js"></script>
 
     <?php if ($loginFailed): ?>
     <script>
