@@ -3,8 +3,8 @@ include('controller/archive-controller.php');
 include('header.php');
 
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'superadmin') {
-  header("Location: archive.php");
-  exit;
+    header("Location: archive.php");
+    exit;
 }
 
 require 'controller/db.php';
@@ -73,6 +73,9 @@ $data = $stmt->fetchAll();
                 Tabel Rekapan Arsip Tahunan
             </div>
             <div class="card-body">
+                <div class="mb-4">
+                    <canvas id="rekapChart" height="100"></canvas>
+                </div>
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped table-hover">
                         <thead class="table-custom text-dark">
@@ -95,5 +98,54 @@ $data = $stmt->fetchAll();
         </div>
     </div>
 </main>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+const ctx = document.getElementById('rekapChart').getContext('2d');
+const chart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: <?= json_encode(array_column($data, 'tahun')) ?>,
+        datasets: [{
+            label: 'Jumlah Arsip',
+            data: <?= json_encode(array_column($data, 'total')) ?>,
+            backgroundColor: 'rgba(54, 162, 235, 0.6)',
+            borderColor: 'rgba(54, 162, 235, 1)',
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: {
+                display: false
+            },
+            tooltip: {
+                callbacks: {
+                    label: function(context) {
+                        return 'Total: ' + context.parsed.y;
+                    }
+                }
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                title: {
+                    display: true,
+                    text: 'Jumlah Arsip'
+                }
+            },
+            x: {
+                title: {
+                    display: true,
+                    text: 'Tahun'
+                }
+            }
+        }
+    }
+});
+</script>
+
 
 <?php include('footer.php'); ?>
